@@ -2,17 +2,15 @@ import { styled } from "..";
 
 export const HomeContainer = styled('main', {
     display: 'flex',
-    //gap: '3rem',
     width: '100%',
     maxWidth: 'calc(100vw - (100vw - 1180px) / 2)',
     marginLeft: 'auto',
     minHeight: 656,
 });
 
-export const Product = styled('a', {
+export const Product = styled('div', {
     background: 'linear-gradient(188deg, #1EA483 0%, #7465D4 100%)',
     borderRadius: 8,
-    //padding: '0.25rem',
     cursor: 'pointer',
     position: 'relative',
     overflow: 'hidden',
@@ -44,8 +42,9 @@ export const Product = styled('a', {
         opacity: 0,
         transition: 'all 0.2s ease-in-out',
 
-        'strong': {
+        strong: {
             fontSize: '$lg',
+            color: '$gray100'
         },
 
         span: {
