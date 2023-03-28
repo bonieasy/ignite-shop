@@ -71,16 +71,6 @@ export const ProductsDetails = styled('div', {
         }
     },
 
-    '.bag': {
-        backgroundColor: '$gray800',
-        borderRadius: 6,
-        width: 48,
-        height: 48,
-
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent:'center',
-
-    },
+   
 
 })

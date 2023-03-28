@@ -1,4 +1,3 @@
-import { Handbag } from '@phosphor-icons/react';
 import axios from 'axios';
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head';
@@ -52,9 +51,7 @@ export default function Product({ product }: ProductProps) {
 
             <ProductsDetails>
 
-                <div className='bag'>
-                    <Handbag size={32} />
-                </div>
+               
 
                 <h1>{product.name}</h1>
                 <span>{product.price}</span>
