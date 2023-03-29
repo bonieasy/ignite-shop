@@ -44,8 +44,8 @@ export default function Home({ products }: HomeProps) {
                   <strong>{product.name}</strong>
                   <span>{product.price}</span>
                 </footer>
-            </Product>
-          </Link>
+              </Product>
+            </Link>
           )
         })}
         

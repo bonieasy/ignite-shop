@@ -19,7 +19,9 @@ export const Header = styled('header', {
     justifyContent: 'space-between',
 
     '.bag': {
+        border: 'none',
         backgroundColor: '$gray800',
+        color: '$white',
         borderRadius: 6,
         width: 48,
         height: 48,
