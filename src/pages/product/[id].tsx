@@ -50,9 +50,6 @@ export default function Product({ product }: ProductProps) {
             </ImageContainer>
 
             <ProductsDetails>
-
-               
-
                 <h1>{product.name}</h1>
                 <span>{product.price}</span>
 

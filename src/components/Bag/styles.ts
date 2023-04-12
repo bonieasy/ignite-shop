@@ -1,4 +1,4 @@
-import { styled } from "..";
+import { styled } from '../../styles'
 import * as Dialog from '@radix-ui/react-dialog';
 
 
@@ -34,49 +34,6 @@ export const BagDetails = styled('div', {
     
 })
 
-export const Products = styled('div', {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: '1rem',
-})
-
-export const ImageContainer = styled('div', {
-    width: '6.371rem',
-    height: '5.813rem',
-    background: 'linear-gradient(188deg, #1EA483 0%, #7465D4 100%)',
-    borderRadius: 8,
-    padding: '0.25rem',
-})
-
-export const ProductDetails = styled('div', {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: '0.5rem',
-    lineHeight: '160%',
-
-    span: {
-        fontWeight: 400,
-        fontSize: 18,
-    },
-
-    strong: {
-        fontWeight: 700,
-        fontSize: 18,
-    },
-
-    button: {
-        background: 'transparent',
-        border: 0,
-        color: '$green500',
-        fontWeight: 700,
-        fontSize: 16,
-        lineHeight: '160%',
-    },
-
-})
-
 export const PriceDetails = styled('footer', {
     button: {
         background: '$green300',
@@ -95,11 +52,9 @@ export const CloseButton = styled(Dialog.Close, {
     position: 'absolute',
     background: 'transparent',
     border: 0,
-    //top: '1rem',
-    //right: '0.1rem',
-    verticalAlign: 'top',
-    marginLeft: '8rem',
-    //marginBottom: 600,
+    top: '1.5rem',
+    float: 'right',
+    marginLeft: '20rem',
     lineHeight: 0,
     cursor: 'pointer',
     color: '$white',
