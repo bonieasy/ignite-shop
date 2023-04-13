@@ -25,7 +25,7 @@ export const HeaderContainer = styled('header', {
 
     },
 
-    '.cartCount': {
+    'span': {
         backgroundColor: '$green500',
         border: '3px solid #121214',
         borderRadius: 1000,

@@ -4,6 +4,8 @@ import { X } from '@phosphor-icons/react';
 import { CartItem } from '../CartItem/CartItem';
 import { useState } from 'react';
 import axios from 'axios';
+import { useShoppingCart } from 'use-shopping-cart';
+import { useRouter } from 'next/router';
 
 interface FormattedData {
   id: string
@@ -15,8 +17,14 @@ interface FormattedData {
 }
 
 export default function BagModal () {
+  const { cartCount, cartDetails, formattedTotalPrice } = useShoppingCart()
+
   let formattedData: FormattedData[] = []
+
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+
+  const { pathname } = useRouter()
+  const isInSuccessPage = pathname === '/success'
 
   async function handleBuyButton() {
     try {
@@ -35,6 +43,19 @@ export default function BagModal () {
 
       alert('Falha ao redirecionar ao checkout!')
     }
+  }
+
+  if (cartDetails !== undefined) {
+    formattedData = Object.entries(cartDetails).map(([key, value]) => {
+      return {
+        id: key,
+        name: value.name,
+        image: value.image as string,
+        formattedPrice: value.formattedPrice,
+        quantity: value.quantity,
+        priceId: value.price_id,
+      }
+    })
   }
 
 
@@ -63,13 +84,18 @@ export default function BagModal () {
               <PriceDetails>
                 <div>
                   <span>Quantidade</span>
-                  <span>3 itens</span>
+                  <span>{cartCount} itens</span>
                 </div>
                 <div>
                   <strong>Valor total</strong>
-                  <strong>R$ 270,00</strong>
+                  <strong>{formattedTotalPrice}</strong>
                 </div>
-                <button>Finalizar compra</button>
+                <button
+                  onClick={handleBuyButton}
+                  //disabled={setIsCreatingCheckoutSession}
+                >
+                  Finalizar compra
+                </button>
               </PriceDetails>
 
             </BagDetails>

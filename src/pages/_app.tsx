@@ -21,6 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
         billingAddressCollection={true}
         shouldPersist={false}
       >
+        
           <Container>
             <Header />
             <Component {...pageProps} />

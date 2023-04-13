@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Image from "next/image";
 import { useState } from 'react';
 import Stripe from 'stripe'
+import { useShoppingCart } from 'use-shopping-cart';
 import { stripe } from '../../lib/stripe'
 import { ImageContainer, ProductContainer, ProductsDetails } from '../../styles/pages/product'
 
@@ -12,31 +13,47 @@ interface ProductProps {
         id: string;
         name: string;
         imageUrl: string;
-        price: string;
+        price: number;
         description: string;
         defaultPriceId: string;
       }
 }
 
 export default function Product({ product }: ProductProps) {
-    const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+    const { addItem } = useShoppingCart()
+    //const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
 
-    async function handleBuyProduct() {
-        try {
-            setIsCreatingCheckoutSession(true);
-            const response = await axios.post('/api/checkout', {
-                priceId: product.defaultPriceId,
-            })
+    // async function handleBuyProduct() {
+    //     try {
+    //         setIsCreatingCheckoutSession(true);
+    //         const response = await axios.post('/api/checkout', {
+    //             priceId: product.defaultPriceId,
+    //         })
 
-            const { checkoutUrl } = response.data;
+    //         const { checkoutUrl } = response.data;
 
-            window.location.href = checkoutUrl
-        } catch (err) {
-            //Conectar com uma ferramenta de observabilidade (Datadog / Sentry)
-            setIsCreatingCheckoutSession(false);
-            alert('Falaha ao redirecionar ao checkout')
-        }
-    }
+    //         window.location.href = checkoutUrl
+    //     } catch (err) {
+    //         //Conectar com uma ferramenta de observabilidade (Datadog / Sentry)
+    //         setIsCreatingCheckoutSession(false);
+    //         alert('Falaha ao redirecionar ao checkout')
+    //     }
+    // }
+
+    function addItemToCart() {
+        addItem(
+          {
+            name: product.name,
+            description: product.description,
+            id: product.id,
+            price: product.price,
+            currency: 'EUR',
+            image: product.imageUrl,
+            price_id: product.defaultPriceId,
+          },
+          { count: 1 },   
+        )
+      }
     
     return(
         <>
@@ -55,11 +72,11 @@ export default function Product({ product }: ProductProps) {
 
                 <p>{product.description}</p>
 
-                <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>Add to Basket</button>
+                <button onClick={addItemToCart}>Add to Basket</button>
             </ProductsDetails>
 
         </ProductContainer>
-        </>
+        </>                           
     )
 }
 
