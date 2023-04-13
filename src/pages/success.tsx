@@ -5,16 +5,25 @@ import { stripe } from "../lib/stripe";
 import { ImageContainer, SuccessContainer } from "../styles/pages/success";
 import Image from "next/image";
 import Head from "next/head";
+import { useShoppingCart } from "use-shopping-cart";
+import { useEffect } from "react";
 
 interface SuccessProps {
     customerName: string;
     product: {
       name: string;
-      imageUrl: string;
+      imageUrl: string[];
     }
   }
 
 export default function Success({ customerName, product  }:SuccessProps) {
+    const { clearCart, cartDetails } = useShoppingCart()
+        useEffect(() => {
+        if (cartDetails !== undefined && Object.keys(cartDetails).length !== 0) {
+            clearCart()
+        }
+        }, [clearCart, cartDetails])
+
     return(
         <>
             <Head>

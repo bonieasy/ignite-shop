@@ -5,7 +5,6 @@ import { CartItem } from '../CartItem/CartItem';
 import { useState } from 'react';
 import axios from 'axios';
 import { useShoppingCart } from 'use-shopping-cart';
-import { useRouter } from 'next/router';
 
 interface FormattedData {
   id: string
@@ -18,14 +17,11 @@ interface FormattedData {
 
 export default function BagModal () {
   const { cartCount, cartDetails, formattedTotalPrice } = useShoppingCart()
-
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
   let formattedData: FormattedData[] = []
 
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
-
-  const { pathname } = useRouter()
-  const isInSuccessPage = pathname === '/success'
-
+  
+  
   async function handleBuyButton() {
     try {
       setIsCreatingCheckoutSession(true)
@@ -92,7 +88,7 @@ export default function BagModal () {
                 </div>
                 <button
                   onClick={handleBuyButton}
-                  //disabled={setIsCreatingCheckoutSession}
+                  disabled={isCreatingCheckoutSession}
                 >
                   Finalizar compra
                 </button>

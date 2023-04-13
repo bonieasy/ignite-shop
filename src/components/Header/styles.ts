@@ -10,6 +10,17 @@ export const HeaderContainer = styled('header', {
     flexDirection: 'row',
     justifyContent: 'space-between',
 
+    variants: {
+        position: {
+          center: {
+            justifyContent: 'center',
+          },
+          spaceBetween: {
+            justifyContent: 'space-between',
+          },
+        },
+      },
+
     '.bag': {
         border: 'none',
         backgroundColor: '$gray800',
