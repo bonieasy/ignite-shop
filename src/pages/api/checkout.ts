@@ -8,6 +8,7 @@ interface FormattedData {
     formattedPrice: string
     quantity: number
     priceId: string
+    price: number
   }
   
   export default async function checkout(

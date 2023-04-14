@@ -31,6 +31,7 @@ export const BagDetails = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    gap: '2rem',
     
 })
 

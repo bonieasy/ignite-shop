@@ -1,15 +1,18 @@
 import { ImageContainer, ProductDetails, Products } from "./styles";
 import Image from "next/image";
 import { useShoppingCart } from 'use-shopping-cart'
+import { PriceDetails } from "../Bag/styles";
 
 interface CartItemProps {
     id: string
     name: string
     image: string
-    formattedPrice: string
+    //formattedPrice: number
+    quantity: number
+    price: number
   }
 
-export function CartItem ({ id, name, image, formattedPrice }: CartItemProps) {
+export function CartItem ({ id, name, image, quantity, price }: CartItemProps) {
     const { removeItem } = useShoppingCart()
 
     return (
@@ -20,8 +23,8 @@ export function CartItem ({ id, name, image, formattedPrice }: CartItemProps) {
             </ImageContainer>
 
             <ProductDetails>
-                <span>{name}</span>
-                <strong>{formattedPrice}</strong>
+                <span>{quantity! > 1 && <strong>x{quantity}&nbsp;</strong>}{name}</span>
+                <strong>{price}</strong>
                 <button onClick={() => removeItem(id)}>Remover</button>
             </ProductDetails>
             

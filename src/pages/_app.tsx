@@ -19,7 +19,8 @@ export default function App({ Component, pageProps }: AppProps) {
         currency="EUR"
         allowedCountries={['BR', 'DE']}
         billingAddressCollection={true}
-        shouldPersist={false}
+        shouldPersist={true}
+        
       >
         
           <Container>

@@ -7,24 +7,38 @@ import 'keen-slider/keen-slider.min.css'
 import Stripe from "stripe";
 import Link from "next/link";
 import Head from "next/head";
+import { Handbag } from "@phosphor-icons/react";
+import { useShoppingCart } from "use-shopping-cart";
 
 interface HomeProps {
   products: {
-    id: string;
-    name: string;
-    imageUrl: string;
-    price: string;
+    id: string
+    name: string
+    imageUrl: string
+    price: number
   }[]
 }
 
 export default function Home({ products }: HomeProps) {
-
+  const { addItem } = useShoppingCart()
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 2.5,
       spacing: 48,
     },
   })
+
+  function addItemToCart(product) {
+    addItem({
+      name: product.name,
+      description: product.description,
+      id: product.id,
+      price: product.price,
+      currency: 'EUR',
+      image: product.imageUrl
+    }, {count: 1})
+    console.log(product);
+  }
 
   return (
     <>
@@ -38,10 +52,17 @@ export default function Home({ products }: HomeProps) {
           return (
             <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
               <Product key={product.id} className="keen-slider__slide">
-                <Image src={product.imageUrl} width={520} height={480} alt="camiseta" />
+                <Image src={product.imageUrl} width={520} height={480} alt="t-shirt" />
                 <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <div>
+                    <strong>{product.name}</strong>
+                    <span>{product.price}</span>
+                  </div>
+
+                  <button onClick={() => addItemToCart(product)}>
+                    <Handbag size={32} weight="bold" />
+                  </button>
+                  
                 </footer>
               </Product>
             </Link>
@@ -60,16 +81,13 @@ export const getStaticProps: GetStaticProps = async () => {
     
   const products = response.data.map(product => {
     const price = product.default_price as Stripe.Price
-    console.log(product)
+    console.log(price)
     
     return {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('DE', {
-        style: 'currency',
-        currency: 'EUR',
-      }).format(price.unit_amount / 100),
+      price: price.unit_amount / 100,
       priceId: price.id,
     }
   })
@@ -81,3 +99,8 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60 * 60 * 2, // 2 hours
   }
 }
+
+// price: new Intl.NumberFormat('DE', {
+//   style: 'currency',
+//   currency: 'EUR',
+// }).format(price.unit_amount / 100),

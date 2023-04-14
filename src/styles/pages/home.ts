@@ -34,7 +34,6 @@ export const Product = styled('div', {
         borderRadius: 6,
 
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'space-between',
 
         backgroundColor: 'rgba(0, 0, 8, 0.6)',
@@ -47,10 +46,31 @@ export const Product = styled('div', {
             color: '$gray100'
         },
 
+        div: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: 'column',
+            gap: 12,
+        },
+
         span: {
             fontSize: '$xl',
             fontWeight: 'bold',
             color: '$green300',
+        },
+
+        button: {
+            border: 'none',
+            backgroundColor: '$green500',
+            color: '$white',
+            borderRadius: 6,
+            width: 56,
+            height:56,
+            padding: 12,
+
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent:'center',            
         },
     },
 

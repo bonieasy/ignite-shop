@@ -29,7 +29,6 @@ export function Header() {
                         {cartCount! > 0 && <span>{cartCount}</span>}
                         </button>
                     )}
-                
 
                 </Dialog.Trigger>
 

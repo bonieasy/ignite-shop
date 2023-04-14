@@ -10,9 +10,10 @@ interface FormattedData {
   id: string
   name: string
   image: string
-  formattedPrice: string
+  formattedPrice: number
   quantity: number
   priceId: string
+  price: number
 }
 
 export default function BagModal () {
@@ -20,16 +21,16 @@ export default function BagModal () {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
   let formattedData: FormattedData[] = []
 
-  
-  
   async function handleBuyButton() {
     try {
       setIsCreatingCheckoutSession(true)
       console.log(formattedData)
+      
 
       const response = await axios.post('/api/checkout', {
         formattedData,
       })
+      
       const { checkoutUrl } = response.data
 
       window.location.href = checkoutUrl
@@ -50,6 +51,7 @@ export default function BagModal () {
         formattedPrice: value.formattedPrice,
         quantity: value.quantity,
         priceId: value.price_id,
+        price: value.price,
       }
     })
   }
@@ -67,12 +69,15 @@ export default function BagModal () {
             <BagDetails>
               {formattedData.map((item) => {
                 return (
+
                   <CartItem 
                     key={item.id}
                     id={item.id}
                     name={item.name}
                     image={item.image}
-                    formattedPrice={item.formattedPrice}
+                    // formattedPrice={item.price}
+                    quantity={item.quantity}
+                    price={item.price}
                   />
                 )
               })}              

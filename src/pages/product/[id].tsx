@@ -40,7 +40,7 @@ export default function Product({ product }: ProductProps) {
     //     }
     // }
 
-    function addItemToCart() {
+ function addItemToCart() {
         addItem(
           {
             name: product.name,
@@ -91,9 +91,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 }
 
-export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
-    const productId = params.id;
+//Gerar pagina estatica para cada produto
 
+export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
+    const productId = params.id; //params -> dentro dele podemos acessar o ID do produto
+
+//
     const product = await stripe.products.retrieve(productId, {
         expand: ['default_price'],
     });
@@ -106,10 +109,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
                 id: product.id,
                 name: product.name,
                 imageUrl: product.images[0],
-                price: new Intl.NumberFormat('DE', {
-                  style: 'currency',
-                  currency: 'EUR',
-                }).format(price.unit_amount / 100),
+                price: price.unit_amount,
                 description: product.description,
                 defaultPriceId: price.id,
             }
