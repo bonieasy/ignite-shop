@@ -16,6 +16,7 @@ interface ProductProps {
         price: number;
         description: string;
         defaultPriceId: string;
+        formattedPrice: string
       }
 }
 
@@ -68,7 +69,7 @@ export default function Product({ product }: ProductProps) {
 
             <ProductsDetails>
                 <h1>{product.name}</h1>
-                <span>{product.price}</span>
+                <span>{product.formattedPrice}</span>
 
                 <p>{product.description}</p>
 
@@ -110,6 +111,10 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
                 name: product.name,
                 imageUrl: product.images[0],
                 price: price.unit_amount,
+                formattedPrice: new Intl.NumberFormat('DE', {
+                    style: 'currency',
+                    currency: 'EUR',
+                }).format(price.unit_amount / 100),
                 description: product.description,
                 defaultPriceId: price.id,
             }

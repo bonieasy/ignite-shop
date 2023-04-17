@@ -16,6 +16,7 @@ interface HomeProps {
     name: string
     imageUrl: string
     price: number
+    formattedPrice: string
   }[]
 }
 
@@ -56,7 +57,7 @@ export default function Home({ products }: HomeProps) {
                 <footer>
                   <div>
                     <strong>{product.name}</strong>
-                    <span>{product.price}</span>
+                    <span>{product.formattedPrice}</span>
                   </div>
 
                   <button onClick={() => addItemToCart(product)}>
@@ -87,7 +88,11 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: price.unit_amount / 100,
+      price: price.unit_amount,
+      formattedPrice: new Intl.NumberFormat('DE', {
+        style: 'currency',
+        currency: 'EUR',
+      }).format(price.unit_amount / 100),
       priceId: price.id,
     }
   })
@@ -99,8 +104,3 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60 * 60 * 2, // 2 hours
   }
 }
-
-// price: new Intl.NumberFormat('DE', {
-//   style: 'currency',
-//   currency: 'EUR',
-// }).format(price.unit_amount / 100),

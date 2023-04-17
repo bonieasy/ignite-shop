@@ -7,12 +7,12 @@ interface CartItemProps {
     id: string
     name: string
     image: string
-    //formattedPrice: number
+    formattedPrice: number
     quantity: number
     price: number
   }
 
-export function CartItem ({ id, name, image, quantity, price }: CartItemProps) {
+export function CartItem ({ id, name, image, quantity, formattedPrice, price }: CartItemProps) {
     const { removeItem } = useShoppingCart()
 
     return (
@@ -24,7 +24,7 @@ export function CartItem ({ id, name, image, quantity, price }: CartItemProps) {
 
             <ProductDetails>
                 <span>{quantity! > 1 && <strong>x{quantity}&nbsp;</strong>}{name}</span>
-                <strong>{price}</strong>
+                <strong>{formattedPrice}</strong>
                 <button onClick={() => removeItem(id)}>Remover</button>
             </ProductDetails>
             

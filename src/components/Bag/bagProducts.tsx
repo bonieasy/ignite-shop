@@ -17,15 +17,14 @@ interface FormattedData {
 }
 
 export default function BagModal () {
-  const { cartCount, cartDetails, formattedTotalPrice } = useShoppingCart()
+  const { cartCount, cartDetails, totalPrice, formattedTotalPrice } = useShoppingCart()
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
   let formattedData: FormattedData[] = []
 
   async function handleBuyButton() {
     try {
       setIsCreatingCheckoutSession(true)
-      console.log(formattedData)
-      
+      console.log(formattedData)      
 
       const response = await axios.post('/api/checkout', {
         formattedData,
@@ -75,7 +74,7 @@ export default function BagModal () {
                     id={item.id}
                     name={item.name}
                     image={item.image}
-                    // formattedPrice={item.price}
+                    formattedPrice={item.price}
                     quantity={item.quantity}
                     price={item.price}
                   />
