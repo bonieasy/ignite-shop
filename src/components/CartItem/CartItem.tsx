@@ -1,15 +1,16 @@
 import { ImageContainer, ProductDetails, Products } from "./styles";
 import Image from "next/image";
 import { useShoppingCart } from 'use-shopping-cart'
-import { PriceDetails } from "../Bag/styles";
 
 interface CartItemProps {
     id: string
     name: string
     image: string
     formattedPrice: number
-    quantity: number
     price: number
+    quantity: number
+    //currency: string
+    //defaultPriceId: string
   }
 
 export function CartItem ({ id, name, image, quantity, formattedPrice, price }: CartItemProps) {

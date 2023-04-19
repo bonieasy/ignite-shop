@@ -6,56 +6,63 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useShoppingCart } from 'use-shopping-cart';
 
-interface FormattedData {
-  id: string
-  name: string
-  image: string
-  formattedPrice: number
-  quantity: number
-  priceId: string
-  price: number
-}
+// interface FormattedData {
+//     id: string;
+//     name: string;
+//     image: string;
+//     priceId: string;
+//     quantity: number;
+//     formattedPrice: number;
+//     price: number;
+//     currency: string;
+// }
 
 export default function BagModal () {
-  const { cartCount, cartDetails, totalPrice, formattedTotalPrice } = useShoppingCart()
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
-  let formattedData: FormattedData[] = []
+  const { cartCount, cartDetails, formattedTotalPrice, clearCart } = useShoppingCart()
+  const formattedData = [] as any[];
+
+  for (const id in cartDetails) {
+    const entry = cartDetails[id];
+    formattedData.push(entry)
+  }
+  const price = formattedData.map((itens) => {
+    return itens.price;
+  });
 
   async function handleBuyButton() {
     try {
-      setIsCreatingCheckoutSession(true)
-      console.log(formattedData)      
-
       const response = await axios.post('/api/checkout', {
-        formattedData,
+        products: formattedData,
       })
-      
+
       const { checkoutUrl } = response.data
+      
+      clearCart();
 
       window.location.href = checkoutUrl
     } catch (err) {
-      setIsCreatingCheckoutSession(false)
       console.log(err)
 
-      alert('Falha ao redirecionar ao checkout!')
+      alert('Failed to redirect to checkout!')
+      console.log(`oque tem no formattedData: ${JSON.stringify(formattedData)}`)  
+      //console.log(checkoutUrl)
     }
   }
 
-  if (cartDetails !== undefined) {
-    formattedData = Object.entries(cartDetails).map(([key, value]) => {
-      return {
-        id: key,
-        name: value.name,
-        image: value.image as string,
-        formattedPrice: value.formattedPrice,
-        quantity: value.quantity,
-        priceId: value.price_id,
-        price: value.price,
-      }
-    })
-  }
-
-
+  // if (cartDetails !== undefined) {
+  //   formattedData = Object.entries(cartDetails).map(([key, value]) => {
+  //     return {
+  //       id: key,
+  //       name: value.name,
+  //       image: value.image as string,
+  //       formattedPrice: value.formattedPrice,
+  //       price: value.price,
+  //       priceId: value.price_id,
+  //       quantity: value.quantity,
+  //       currency: value.currency,
+  //     }
+  //   })
+  // }
   return(
     <Dialog.Portal>
       <Overlay />
@@ -74,8 +81,8 @@ export default function BagModal () {
                     id={item.id}
                     name={item.name}
                     image={item.image}
-                    formattedPrice={item.price}
                     quantity={item.quantity}
+                    formattedPrice={item.formattedPrice}
                     price={item.price}
                   />
                 )
@@ -92,7 +99,6 @@ export default function BagModal () {
                 </div>
                 <button
                   onClick={handleBuyButton}
-                  disabled={isCreatingCheckoutSession}
                 >
                   Finalizar compra
                 </button>

@@ -85,9 +85,6 @@ export const getServerSideProps: GetServerSideProps = async ( { query }) => {
         return item.images
     })
    
-    console.log(img)
-    
-
     var totalAmount = LineItems.reduce(getTotal, 0);
 
     function getTotal(totalAmount, item) {

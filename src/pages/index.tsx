@@ -16,7 +16,8 @@ interface HomeProps {
     name: string
     imageUrl: string
     price: number
-    formattedPrice: string
+    formattedPrice: number
+    // defaultPriceId: string
   }[]
 }
 
@@ -36,9 +37,9 @@ export default function Home({ products }: HomeProps) {
       id: product.id,
       price: product.price,
       currency: 'EUR',
-      image: product.imageUrl
+      image: product.imageUrl,
     }, {count: 1})
-    console.log(product);
+    console.log(`product: ${JSON.stringify(product)}`);
   }
 
   return (
@@ -80,9 +81,8 @@ export const getStaticProps: GetStaticProps = async () => {
     expand: ['data.default_price']
   });
     
-  const products = response.data.map(product => {
+  const products = response.data.map((product) => {
     const price = product.default_price as Stripe.Price
-    console.log(price)
     
     return {
       id: product.id,
@@ -91,12 +91,11 @@ export const getStaticProps: GetStaticProps = async () => {
       price: price.unit_amount,
       formattedPrice: new Intl.NumberFormat('DE', {
         style: 'currency',
-        currency: 'EUR',
+        currency: 'eur',
       }).format(price.unit_amount / 100),
-      priceId: price.id,
+      defaultPriceId: price.id,
     }
   })
-
   return {
     props: {
       products,
