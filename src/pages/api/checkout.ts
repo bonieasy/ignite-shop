@@ -47,6 +47,13 @@ import { stripe } from "../../lib/stripe"
       line_items:  products.map((product) => ({
         price: product.price_id,
         quantity: 1,
+        price_data: {
+          currency: 'eur',
+          unit_amount: product.price,
+          product_data: {
+            name: product.name,
+          }
+        }
       })),
     });
 
