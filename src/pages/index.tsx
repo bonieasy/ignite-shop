@@ -17,7 +17,6 @@ interface HomeProps {
     imageUrl: string
     price: number
     formattedPrice: number
-    // defaultPriceId: string
   }[]
 }
 

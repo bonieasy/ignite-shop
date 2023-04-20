@@ -6,17 +6,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useShoppingCart } from 'use-shopping-cart';
 
-// interface FormattedData {
-//     id: string;
-//     name: string;
-//     image: string;
-//     priceId: string;
-//     quantity: number;
-//     formattedPrice: number;
-//     price: number;
-//     currency: string;
-// }
-
 export default function BagModal () {
   const { cartCount, cartDetails, formattedTotalPrice, clearCart } = useShoppingCart()
   const formattedData = [] as any[];
@@ -49,20 +38,6 @@ export default function BagModal () {
     }
   }
 
-  // if (cartDetails !== undefined) {
-  //   formattedData = Object.entries(cartDetails).map(([key, value]) => {
-  //     return {
-  //       id: key,
-  //       name: value.name,
-  //       image: value.image as string,
-  //       formattedPrice: value.formattedPrice,
-  //       price: value.price,
-  //       priceId: value.price_id,
-  //       quantity: value.quantity,
-  //       currency: value.currency,
-  //     }
-  //   })
-  // }
   return(
     <Dialog.Portal>
       <Overlay />

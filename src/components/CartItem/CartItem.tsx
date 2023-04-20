@@ -9,8 +9,6 @@ interface CartItemProps {
     formattedPrice: number
     price: number
     quantity: number
-    //currency: string
-    //defaultPriceId: string
   }
 
 export function CartItem ({ id, name, image, quantity, formattedPrice, price }: CartItemProps) {
